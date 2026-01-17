@@ -15,7 +15,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 
 import adminRoutes from "./routes/adminRoutes.js";
 
-
+import api from "../api/axios";
 
 
 dotenv.config();
@@ -54,18 +54,7 @@ app.get("/api/health", (req, res) => {
 });
 
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "http://localhost:5175",
-      "https://YOUR-CLIENT.vercel.app",
-      "https://YOUR-ADMIN.vercel.app",
-    ],
-    credentials: true,
-  })
-);
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
@@ -77,6 +66,15 @@ app.use("/api/admin/projects", adminProjectRoutes);
 app.use("/api/contact", contactRoutes);
 
 app.use("/api/admin", adminRoutes);
+
+
+
+
+
+api.get("/api/projects");
+api.post("/api/auth/login", data);
+api.post("/api/contact", formData);
+
 
 const PORT = process.env.PORT || 5000;
 
