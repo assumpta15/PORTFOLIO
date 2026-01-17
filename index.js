@@ -54,6 +54,18 @@ app.get("/api/health", (req, res) => {
 });
 
 
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:5175",
+      "https://YOUR-CLIENT.vercel.app",
+      "https://YOUR-ADMIN.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
