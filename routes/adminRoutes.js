@@ -106,6 +106,18 @@ router.get("/messages/unread-count", async (req, res) => {
 });
 
 
+router.patch("/messages/:id/read", async (req, res) => {
+  try {
+    const msg = await ContactMessage.findByIdAndUpdate(
+      req.params.id,
+      { isRead: true },
+      { new: true }
+    );
+    res.json(msg);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to mark as read" });
+  }
+});
 
 export default router;
 

@@ -11,9 +11,11 @@ const seedAdmin = async () => {
 
     await Admin.deleteMany(); // remove old admins
 
-    
+    const hashedPassword = await bcrypt.hash("admin123", 10);
+
     await Admin.create({
-    
+      email: "admin@portfolio.com",
+      password: hashedPassword,
     });
 
     console.log("✅ Admin seeded successfully");
