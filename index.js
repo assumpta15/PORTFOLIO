@@ -27,14 +27,25 @@ app.use(express.json());
 
 
 
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "http://localhost:5174",
+//       "http://localhost:5175",
+//       "https://your-client.vercel.app",
+//       "https://your-admin.vercel.app",
+//     ],
+//     credentials: true,
+//   })
+// );
+
+
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "http://localhost:5175",
-      "https://your-client.vercel.app",
-      "https://your-admin.vercel.app",
+      "https://portfolio-client-xxx.vercel.app",
+      "https://portfolio-admin-xxx.vercel.app",
     ],
     credentials: true,
   })
