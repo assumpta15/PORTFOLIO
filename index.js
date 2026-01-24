@@ -1,4 +1,3 @@
-
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -6,29 +5,18 @@ import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
-import { errorHandler } from "./middleware/errorMiddleware.js";
-
 import adminProjectRoutes from "./routes/adminProjectRoutes.js";
-
-//import contactRoutes from "./routes/contactRoutes.js";
-
-
 import adminRoutes from "./routes/adminRoutes.js";
-
 import contactRoutes from "./routes/contact.js";
 
-
-
-
+import { errorHandler } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 
 const app = express();
 
-// Middleware
+// ✅ Middleware
 app.use(express.json());
-
-
 
 app.use(
   cors({
@@ -36,55 +24,32 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "http://localhost:5175",
-      "https://your-client.vercel.app",
-      "https://your-admin.vercel.app",
+      "https://assumpta.site",
+      "https://www.assumpta.site",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:5173",
-//       "http://localhost:5174",
-//       "https://portfolio-client-65ji.vercel.app",
-//       "https://portfolio-admin-pr43.vercel.app",
-//     ],
-//     credentials: true,
-//   })
-// );
-
-// Test route
+// ✅ Test routes
 app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
-
-// Routes
-
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK" });
 });
 
-
-
-
+// ✅ API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
-
-app.use(errorHandler);
-
-app.use("/api/admin/projects", adminProjectRoutes); 
-
-app.use("/api/contact", contactRoutes);
-
+app.use("/api/admin/projects", adminProjectRoutes);
 app.use("/api/admin", adminRoutes);
-
-
-app.use(express.json());
 app.use("/api/contact", contactRoutes);
 
+// ✅ Error handler (ALWAYS LAST)
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
