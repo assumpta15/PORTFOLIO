@@ -10,12 +10,15 @@ import { errorHandler } from "./middleware/errorMiddleware.js";
 
 import adminProjectRoutes from "./routes/adminProjectRoutes.js";
 
-import contactRoutes from "./routes/contactRoutes.js";
+//import contactRoutes from "./routes/contactRoutes.js";
 
 
 import adminRoutes from "./routes/adminRoutes.js";
 
-import api from "../api/axios";
+import contactRoutes from "./routes/contact.js";
+
+
+
 
 
 dotenv.config();
@@ -27,30 +30,30 @@ app.use(express.json());
 
 
 
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:5173",
-//       "http://localhost:5174",
-//       "http://localhost:5175",
-//       "https://your-client.vercel.app",
-//       "https://your-admin.vercel.app",
-//     ],
-//     credentials: true,
-//   })
-// );
-
-
 app.use(
   cors({
     origin: [
-      "https://portfolio-client-xxx.vercel.app",
-      "https://portfolio-admin-xxx.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:5175",
+      "https://your-client.vercel.app",
+      "https://your-admin.vercel.app",
     ],
     credentials: true,
   })
 );
 
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "http://localhost:5174",
+//       "https://portfolio-client-65ji.vercel.app",
+//       "https://portfolio-admin-pr43.vercel.app",
+//     ],
+//     credentials: true,
+//   })
+// );
 
 // Test route
 app.get("/", (req, res) => {
@@ -79,12 +82,8 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes);
 
 
-
-
-
-api.get("/api/projects");
-api.post("/api/auth/login", data);
-api.post("/api/contact", formData);
+app.use(express.json());
+app.use("/api/contact", contactRoutes);
 
 
 const PORT = process.env.PORT || 5000;
