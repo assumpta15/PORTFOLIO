@@ -1,57 +1,52 @@
-
 import express from "express";
 import {
   getPublicProjects,
   getPublicProjectById,
-  getProjectById,
   createProject,
   updateProject,
   deleteProject,
-  getProjects,
-
 } from "../controllers/projectController.js";
-import authMiddleware from "../middleware/authMiddleware.js";
 
+import authMiddleware from "../middleware/authMiddleware.js";
 import upload from "../middleware/multer.js";
+
 const router = express.Router();
 
-// PUBLIC ROUTES 
+/* =======================
+   PUBLIC ROUTES
+======================= */
+
+// GET all public projects
 router.get("/", getPublicProjects);
+
+// GET single public project
 router.get("/:id", getPublicProjectById);
 
-// ADMIN / PROTECTED ROUTES 
+/* =======================
+   ADMIN ROUTES
+======================= */
+
+// CREATE project
 router.post(
-  "/projects",
+  "/admin",
+  authMiddleware,
   upload.single("image"),
   createProject
 );
 
+// UPDATE project
 router.put(
-  "/:id",
+  "/admin/:id",
   authMiddleware,
   upload.single("image"),
   updateProject
-);   
+);
 
-
-
-router.get("/", getProjects);
-router.get("/:id", getProjectById); 
-
-
-
-
-router.delete("/:id", authMiddleware, deleteProject);
-
-
-
-
-
-
-
-router.post("/", upload.single("image"), createProject);
-
-router.put("/projects/:id", upload.single("image"), updateProject);
-
+// DELETE project
+router.delete(
+  "/admin/:id",
+  authMiddleware,
+  deleteProject
+);
 
 export default router;
