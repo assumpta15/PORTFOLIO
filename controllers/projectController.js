@@ -79,20 +79,44 @@ export const getProjects = async (req, res) => {
 
 
 // PUBLIC — only live projects
-export const getPublicProjects = async (req, res, next) => {
-  try {
-    const projects = await Project.find({ status: "live" }).sort({
-      createdAt: -1,
-    });
+// export const getPublicProjects = async (req, res, next) => {
+//   try {
+//     const projects = await Project.find({ status: "live" }).sort({
+//       createdAt: -1,
+//     });
 
-    res.json({
-      success: true,
-      data: projects,
-    });
+//     res.json({
+//       success: true,
+//       data: projects,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
+export const getPublicProjects = async (req, res) => {
+  try {
+    const projects = await Project.find().sort({ createdAt: -1 });
+    res.status(200).json(projects);
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: "Failed to fetch projects" });
   }
 };
+
+export const getPublicProjectById = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+    res.status(200).json(project);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch project" });
+  }
+};
+
+
 
 // ADMIN — all projects
 export const getAdminProjects = async (req, res, next) => {
@@ -111,26 +135,26 @@ export const getAdminProjects = async (req, res, next) => {
 
 
 
-export const getPublicProjectById = async (req, res, next) => {
-  try {
-    const project = await Project.findOne({
-      _id: req.params.id,
-      status: "live",
-    });
+// export const getPublicProjectById = async (req, res, next) => {
+//   try {
+//     const project = await Project.findOne({
+//       _id: req.params.id,
+//       status: "live",
+//     });
 
-    if (!project) {
-      res.status(404);
-      throw new Error("Project not found");
-    }
+//     if (!project) {
+//       res.status(404);
+//       throw new Error("Project not found");
+//     }
 
-    res.json({
-      success: true,
-      data: project,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.json({
+//       success: true,
+//       data: project,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 
 

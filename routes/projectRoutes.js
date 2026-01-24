@@ -12,6 +12,8 @@ import upload from "../middleware/multer.js";
 
 const router = express.Router();
 
+
+
 /* =======================
    PUBLIC ROUTES
 ======================= */
@@ -27,26 +29,26 @@ router.get("/:id", getPublicProjectById);
 ======================= */
 
 // CREATE project
-router.post(
-  "/admin",
-  authMiddleware,
-  upload.single("image"),
-  createProject
-);
+// router.post(
+//   "/admin",
+//   authMiddleware,
+//   upload.single("image"),
+//   createProject
+// );
 
 // UPDATE project
-router.put(
-  "/admin/:id",
-  authMiddleware,
-  upload.single("image"),
-  updateProject
-);
+// router.put(
+//   "/admin/:id",
+//   authMiddleware,
+//   upload.single("image"),
+//   updateProject
+// );
 
 // DELETE project
-router.delete(
-  "/admin/:id",
-  authMiddleware,
-  deleteProject
-);
+// router.delete(
+//   "/admin/:id",
+//   authMiddleware,
+//   deleteProject
+// );
 
 export default router;
