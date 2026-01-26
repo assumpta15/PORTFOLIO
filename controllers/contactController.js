@@ -9,14 +9,14 @@ export const sendContactEmail = async (req, res) => {
       return res.status(400).json({ message: "All fields required" });
     }
 
-    // Save to MongoDB
+    // ✅ Save message ONCE to MongoDB
     const savedMessage = await ContactMessage.create({
       name,
       email,
       message,
     });
 
-    // Send email
+    // ✅ Send email
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -24,13 +24,6 @@ export const sendContactEmail = async (req, res) => {
         pass: process.env.EMAIL_PASS,
       },
     });
-
-    await ContactMessage.create({
-  name,
-  email,
-  message,
-});
-
 
     await transporter.sendMail({
       from: `"Assumpta.dev" <${process.env.EMAIL_USER}>`,
@@ -45,7 +38,10 @@ export const sendContactEmail = async (req, res) => {
       `,
     });
 
-    res.status(201).json(savedMessage);
+    res.status(201).json({
+      success: true,
+      message: "Message sent successfully",
+    });
   } catch (error) {
     console.error("CONTACT ERROR:", error);
     res.status(500).json({ message: "Failed to send message" });
