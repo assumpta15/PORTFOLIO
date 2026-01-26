@@ -63,7 +63,6 @@
 
 
 
-
 import express from "express";
 import {
   getPublicProjects,
@@ -72,7 +71,7 @@ import {
 
 const router = express.Router();
 
-// PUBLIC ROUTES (for your portfolio site)
+// CLIENT (PUBLIC)
 router.get("/", getPublicProjects);
 router.get("/:id", getPublicProjectById);
 
